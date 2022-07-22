@@ -1172,6 +1172,32 @@ public:
 };
 } // namespace
 
+// Decompose aten.std.dim to sqrt(var.dim(x))
+namespace {
+class DecomposeAtenStdDimOp : public OpRewritePattern<AtenStdDimOp> {
+public:
+  using OpRewritePattern::OpRewritePattern;
+  LogicalResult matchAndRewrite(AtenStdDimOp op,
+		                PatternRewriter &rewriter) const override {
+    Value self = op.self();
+    BaseTensorType inputTensorType = self.getType().cast<BaseTensorType>();
+    if (!inputTensorType.hasDtype() ||
+        !inputTensorType.getDtype().isa<mlir::FloatType>()) {
+      return rewriter.notifyMatchFailure(op,
+                                         "aten.std.dim only supports floating type");
+    }
+
+
+    Value varDim = rewriter.create<AtenVarDimOp>(op->getLoc(), op.getType(), self,
+                                                 op.dim(), op.unbiased(),
+                                                 op.keepdim());
+    rewriter.replaceOpWithNewOp<AtenSqrtOp>(op, op.getType(), varDim);
+    return success();
+  }
+};
+} // namespace
+
+
 // Hardsigmoid(x) = max(0, min(1, (x+3)/6))
 namespace {
 class DecomposeAtenHardsigmoidOp : public OpRewritePattern<AtenHardsigmoidOp> {
@@ -2390,6 +2416,8 @@ class DecomposeComplexOpsPass
     target.addIllegalOp<AtenSelectScatterOp>();
     patterns.add<DecomposeAtenVarDimOp>(context);
     target.addIllegalOp<AtenVarDimOp>();
+    patterns.add<DecomposeAtenStdDimOp>(context);
+    target.addIllegalOp<AtenStdDimOp>();
 
     if (failed(applyPartialConversion(getOperation(), target,
                                       std::move(patterns)))) {
