@@ -28,6 +28,846 @@ StringRef mlir::torch::Torch::getShapeLibrary() {
 #pragma clang diagnostic ignored "-Woverlength-strings"
   constexpr StringLiteral shapeLib(R"mlir(
 module {
+  func.func @__torch__.torch._decomp.decompositions.nll_loss_backward(%arg0: !torch.tensor, %arg1: !torch.tensor, %arg2: !torch.tensor, %arg3: !torch.optional<tensor>, %arg4: !torch.int, %arg5: !torch.int, %arg6: !torch.tensor) -> !torch.tensor {
+    %float-1.000000e00 = torch.constant.float -1.000000e+00
+    %str = torch.constant.str "Expected a single element grad_output tensor, but got: {}"
+    %str_0 = torch.constant.str "Expected a tensor of dimension 1 and tensor.size[0] == {} but got: dimension {} and tensor.size[0] == {}"
+    %str_1 = torch.constant.str "AssertionError: weight tensor should be defined either for all or no classes"
+    %int-1 = torch.constant.int -1
+    %str_2 = torch.constant.str "{} ({} elements)"
+    %str_3 = torch.constant.str "expected total_weight to be a single element tensor, got: "
+    %str_4 = torch.constant.str "AssertionError: "
+    %str_5 = torch.constant.str "size mismatch (got input: {}, target: {})"
+    %true = torch.constant.bool true
+    %str_6 = torch.constant.str "AssertionError: 0D or 1D target tensor expected, multi-target not supported"
+    %none = torch.constant.none
+    %str_7 = torch.constant.str "AssertionError: input tensor should be 1D or 2D"
+    %false = torch.constant.bool false
+    %int0 = torch.constant.int 0
+    %int2 = torch.constant.int 2
+    %int1 = torch.constant.int 1
+    %0 = torch.prim.Uninitialized : !torch.optional<tensor>
+    %1 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+    %2 = torch.aten.le.int %int0, %1 : !torch.int, !torch.int -> !torch.bool
+    %3 = torch.prim.If %2 -> (!torch.bool) {
+      %35 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+      %36 = torch.aten.le.int %35, %int2 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If.yield %36 : !torch.bool
+    } else {
+      torch.prim.If.yield %false : !torch.bool
+    }
+    torch.prim.If %3 -> () {
+      torch.prim.If.yield
+    } else {
+      torch.prim.RaiseException %str_7, %none : !torch.str, !torch.none
+      torch.prim.If.yield
+    }
+    %4 = torch.aten.dim %arg2 : !torch.tensor -> !torch.int
+    %5 = torch.aten.le.int %4, %int1 : !torch.int, !torch.int -> !torch.bool
+    torch.prim.If %5 -> () {
+      torch.prim.If.yield
+    } else {
+      torch.prim.RaiseException %str_6, %none : !torch.str, !torch.none
+      torch.prim.If.yield
+    }
+    %6 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+    %7 = torch.aten.eq.int %6, %int1 : !torch.int, !torch.int -> !torch.bool
+    %8 = torch.prim.If %7 -> (!torch.bool) {
+      %35 = torch.aten.dim %arg2 : !torch.tensor -> !torch.int
+      %36 = torch.aten.eq.int %35, %int0 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If.yield %36 : !torch.bool
+    } else {
+      torch.prim.If.yield %false : !torch.bool
+    }
+    %9 = torch.prim.If %8 -> (!torch.bool) {
+      torch.prim.If.yield %true : !torch.bool
+    } else {
+      %35 = torch.aten.size.int %arg1, %int0 : !torch.tensor, !torch.int -> !torch.int
+      %36 = torch.aten.size.int %arg2, %int0 : !torch.tensor, !torch.int -> !torch.int
+      %37 = torch.aten.eq.int %35, %36 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If.yield %37 : !torch.bool
+    }
+    torch.prim.If %9 -> () {
+      torch.prim.If.yield
+    } else {
+      %35 = torch.aten.size %arg1 : !torch.tensor -> !torch.list<int>
+      %36 = torch.aten.size %arg2 : !torch.tensor -> !torch.list<int>
+      %37 = torch.aten.format(%str_5, %35, %36) : !torch.str, !torch.list<int>, !torch.list<int> -> !torch.str
+      %38 = torch.aten.add.str %str_4, %37 : !torch.str, !torch.str -> !torch.str
+      torch.prim.RaiseException %38, %none : !torch.str, !torch.none
+      torch.prim.If.yield
+    }
+    %10 = torch.aten.numel %arg6 : !torch.tensor -> !torch.int
+    %11 = torch.aten.eq.int %10, %int1 : !torch.int, !torch.int -> !torch.bool
+    torch.prim.If %11 -> () {
+      torch.prim.If.yield
+    } else {
+      %35 = torch.aten.size %arg6 : !torch.tensor -> !torch.list<int>
+      %36 = torch.aten.numel %arg6 : !torch.tensor -> !torch.int
+      %37 = torch.aten.format(%str_2, %35, %36) : !torch.str, !torch.list<int>, !torch.int -> !torch.str
+      %38 = torch.prim.TupleConstruct %str_3, %37 : !torch.str, !torch.str -> !torch.tuple<str, str>
+      %39 = torch.aten.str %38 : !torch.tuple<str, str> -> !torch.str
+      %40 = torch.aten.add.str %str_4, %39 : !torch.str, !torch.str -> !torch.str
+      torch.prim.RaiseException %40, %none : !torch.str, !torch.none
+      torch.prim.If.yield
+    }
+    %12 = torch.aten.__is__ %arg3, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+    %13 = torch.prim.If %12 -> (!torch.bool) {
+      torch.prim.If.yield %true : !torch.bool
+    } else {
+      %35 = torch.prim.unchecked_cast %arg3 : !torch.optional<tensor> -> !torch.tensor
+      %36 = torch.aten.numel %35 : !torch.tensor -> !torch.int
+      %37 = torch.aten.size.int %arg1, %int-1 : !torch.tensor, !torch.int -> !torch.int
+      %38 = torch.aten.eq.int %36, %37 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If.yield %38 : !torch.bool
+    }
+    %14 = torch.prim.If %13 -> (!torch.optional<tensor>) {
+      torch.prim.If.yield %arg3 : !torch.optional<tensor>
+    } else {
+      torch.prim.RaiseException %str_1, %none : !torch.str, !torch.none
+      torch.prim.If.yield %0 : !torch.optional<tensor>
+    }
+    %15 = torch.aten.eq.int %arg4, %int0 : !torch.int, !torch.int -> !torch.bool
+    %16 = torch.prim.If %15 -> (!torch.bool) {
+      %35 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+      %36 = torch.aten.eq.int %35, %int2 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If.yield %36 : !torch.bool
+    } else {
+      torch.prim.If.yield %false : !torch.bool
+    }
+    torch.prim.If %16 -> () {
+      %35 = torch.aten.dim %arg0 : !torch.tensor -> !torch.int
+      %36 = torch.aten.eq.int %35, %int1 : !torch.int, !torch.int -> !torch.bool
+      %37 = torch.prim.If %36 -> (!torch.bool) {
+        %38 = torch.aten.size.int %arg0, %int0 : !torch.tensor, !torch.int -> !torch.int
+        %39 = torch.aten.size.int %arg1, %int0 : !torch.tensor, !torch.int -> !torch.int
+        %40 = torch.aten.eq.int %38, %39 : !torch.int, !torch.int -> !torch.bool
+        torch.prim.If.yield %40 : !torch.bool
+      } else {
+        torch.prim.If.yield %false : !torch.bool
+      }
+      torch.prim.If %37 -> () {
+        torch.prim.If.yield
+      } else {
+        %38 = torch.aten.size.int %arg1, %int0 : !torch.tensor, !torch.int -> !torch.int
+        %39 = torch.aten.dim %arg0 : !torch.tensor -> !torch.int
+        %40 = torch.aten.size.int %arg0, %int0 : !torch.tensor, !torch.int -> !torch.int
+        %41 = torch.aten.format(%str_0, %38, %39, %40) : !torch.str, !torch.int, !torch.int, !torch.int -> !torch.str
+        %42 = torch.aten.add.str %str_4, %41 : !torch.str, !torch.str -> !torch.str
+        torch.prim.RaiseException %42, %none : !torch.str, !torch.none
+        torch.prim.If.yield
+      }
+      torch.prim.If.yield
+    } else {
+      %35 = torch.aten.dim %arg0 : !torch.tensor -> !torch.int
+      %36 = torch.aten.le.int %35, %int1 : !torch.int, !torch.int -> !torch.bool
+      %37 = torch.prim.If %36 -> (!torch.bool) {
+        %38 = torch.aten.numel %arg0 : !torch.tensor -> !torch.int
+        %39 = torch.aten.eq.int %38, %int1 : !torch.int, !torch.int -> !torch.bool
+        torch.prim.If.yield %39 : !torch.bool
+      } else {
+        torch.prim.If.yield %false : !torch.bool
+      }
+      torch.prim.If %37 -> () {
+        torch.prim.If.yield
+      } else {
+        %38 = torch.aten.size %arg0 : !torch.tensor -> !torch.list<int>
+        %39 = torch.aten.format(%str, %38) : !torch.str, !torch.list<int> -> !torch.str
+        %40 = torch.aten.add.str %str_4, %39 : !torch.str, !torch.str -> !torch.str
+        torch.prim.RaiseException %40, %none : !torch.str, !torch.none
+        torch.prim.If.yield
+      }
+      torch.prim.If.yield
+    }
+    %17 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+    %18 = torch.aten.lt.int %17, %int2 : !torch.int, !torch.int -> !torch.bool
+    %19 = torch.prim.If %18 -> (!torch.int) {
+      torch.prim.If.yield %int0 : !torch.int
+    } else {
+      torch.prim.If.yield %int1 : !torch.int
+    }
+    %20 = torch.aten.eq.int %arg4, %int1 : !torch.int, !torch.int -> !torch.bool
+    %21 = torch.prim.If %20 -> (!torch.tensor) {
+      %35 = torch.aten.div.Tensor %arg0, %arg6 : !torch.tensor, !torch.tensor -> !torch.tensor
+      torch.prim.If.yield %35 : !torch.tensor
+    } else {
+      torch.prim.If.yield %arg0 : !torch.tensor
+    }
+    %22 = torch.aten.unsqueeze %arg2, %19 : !torch.tensor, !torch.int -> !torch.tensor
+    %23 = torch.aten.zeros_like %arg1, %none, %none, %none, %none, %none : !torch.tensor, !torch.none, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+    %24 = torch.operator "aten.scatter.value"(%23, %19, %22, %float-1.000000e00) : (!torch.tensor, !torch.int, !torch.tensor, !torch.float) -> !torch.tensor
+    %25 = torch.aten.dim %24 : !torch.tensor -> !torch.int
+    %26 = torch.aten.dim %21 : !torch.tensor -> !torch.int
+    %27 = torch.aten.gt.int %25, %26 : !torch.int, !torch.int -> !torch.bool
+    %28 = torch.prim.If %27 -> (!torch.bool) {
+      %35 = torch.aten.dim %21 : !torch.tensor -> !torch.int
+      %36 = torch.aten.gt.int %35, %int0 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If.yield %36 : !torch.bool
+    } else {
+      torch.prim.If.yield %false : !torch.bool
+    }
+    %29 = torch.prim.If %28 -> (!torch.tensor) {
+      %35 = torch.aten.unsqueeze %21, %19 : !torch.tensor, !torch.int -> !torch.tensor
+      torch.prim.If.yield %35 : !torch.tensor
+    } else {
+      torch.prim.If.yield %21 : !torch.tensor
+    }
+    %30 = torch.aten.__isnot__ %14, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+    %31 = torch.prim.If %30 -> (!torch.tensor) {
+      %35 = torch.prim.unchecked_cast %14 : !torch.optional<tensor> -> !torch.tensor
+      %36 = torch.prim.ListConstruct  : () -> !torch.list<int>
+      %37 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+      torch.prim.Loop %37, %true, init() {
+      ^bb0(%arg7: !torch.int):
+        %42 = torch.aten.append.t %36, %int1 : !torch.list<int>, !torch.int -> !torch.list<int>
+        torch.prim.Loop.condition %true, iter()
+      } : (!torch.int, !torch.bool) -> ()
+      %38 = torch.aten.size.int %35, %int0 : !torch.tensor, !torch.int -> !torch.int
+      %39 = torch.aten._set_item.t %36, %19, %38 : !torch.list<int>, !torch.int, !torch.int -> !torch.list<int>
+      %40 = torch.aten.reshape %35, %36 : !torch.tensor, !torch.list<int> -> !torch.tensor
+      %41 = torch.aten.mul.Tensor %29, %40 : !torch.tensor, !torch.tensor -> !torch.tensor
+      torch.prim.If.yield %41 : !torch.tensor
+    } else {
+      torch.prim.If.yield %29 : !torch.tensor
+    }
+    %32 = torch.aten.ge.int %arg5, %int0 : !torch.int, !torch.int -> !torch.bool
+    %33 = torch.prim.If %32 -> (!torch.tensor) {
+      %35 = torch.aten.ne.Scalar %22, %arg5 : !torch.tensor, !torch.int -> !torch.tensor
+      %36 = torch.aten.where.ScalarOther %35, %31, %int0 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      torch.prim.If.yield %36 : !torch.tensor
+    } else {
+      torch.prim.If.yield %31 : !torch.tensor
+    }
+    %34 = torch.aten.mul.Tensor %24, %33 : !torch.tensor, !torch.tensor -> !torch.tensor
+    return %34 : !torch.tensor
+  }
+  func.func @__torch__.torch._decomp.decompositions._nll_loss_backward(%arg0: !torch.tensor, %arg1: !torch.tensor, %arg2: !torch.tensor, %arg3: !torch.optional<tensor>, %arg4: !torch.int, %arg5: !torch.int, %arg6: !torch.tensor) -> !torch.tensor {
+    %true = torch.constant.bool true
+    %false = torch.constant.bool false
+    %float-1.000000e00 = torch.constant.float -1.000000e+00
+    %none = torch.constant.none
+    %int2 = torch.constant.int 2
+    %int0 = torch.constant.int 0
+    %int1 = torch.constant.int 1
+    %0 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+    %1 = torch.aten.lt.int %0, %int2 : !torch.int, !torch.int -> !torch.bool
+    %2 = torch.prim.If %1 -> (!torch.int) {
+      torch.prim.If.yield %int0 : !torch.int
+    } else {
+      torch.prim.If.yield %int1 : !torch.int
+    }
+    %3 = torch.aten.eq.int %arg4, %int1 : !torch.int, !torch.int -> !torch.bool
+    %4 = torch.prim.If %3 -> (!torch.tensor) {
+      %18 = torch.aten.div.Tensor %arg0, %arg6 : !torch.tensor, !torch.tensor -> !torch.tensor
+      torch.prim.If.yield %18 : !torch.tensor
+    } else {
+      torch.prim.If.yield %arg0 : !torch.tensor
+    }
+    %5 = torch.aten.unsqueeze %arg2, %2 : !torch.tensor, !torch.int -> !torch.tensor
+    %6 = torch.aten.zeros_like %arg1, %none, %none, %none, %none, %none : !torch.tensor, !torch.none, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+    %7 = torch.operator "aten.scatter.value"(%6, %2, %5, %float-1.000000e00) : (!torch.tensor, !torch.int, !torch.tensor, !torch.float) -> !torch.tensor
+    %8 = torch.aten.dim %7 : !torch.tensor -> !torch.int
+    %9 = torch.aten.dim %4 : !torch.tensor -> !torch.int
+    %10 = torch.aten.gt.int %8, %9 : !torch.int, !torch.int -> !torch.bool
+    %11 = torch.prim.If %10 -> (!torch.bool) {
+      %18 = torch.aten.dim %4 : !torch.tensor -> !torch.int
+      %19 = torch.aten.gt.int %18, %int0 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If.yield %19 : !torch.bool
+    } else {
+      torch.prim.If.yield %false : !torch.bool
+    }
+    %12 = torch.prim.If %11 -> (!torch.tensor) {
+      %18 = torch.aten.unsqueeze %4, %2 : !torch.tensor, !torch.int -> !torch.tensor
+      torch.prim.If.yield %18 : !torch.tensor
+    } else {
+      torch.prim.If.yield %4 : !torch.tensor
+    }
+    %13 = torch.aten.__isnot__ %arg3, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+    %14 = torch.prim.If %13 -> (!torch.tensor) {
+      %18 = torch.prim.unchecked_cast %arg3 : !torch.optional<tensor> -> !torch.tensor
+      %19 = torch.prim.ListConstruct  : () -> !torch.list<int>
+      %20 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+      torch.prim.Loop %20, %true, init() {
+      ^bb0(%arg7: !torch.int):
+        %25 = torch.aten.append.t %19, %int1 : !torch.list<int>, !torch.int -> !torch.list<int>
+        torch.prim.Loop.condition %true, iter()
+      } : (!torch.int, !torch.bool) -> ()
+      %21 = torch.aten.size.int %18, %int0 : !torch.tensor, !torch.int -> !torch.int
+      %22 = torch.aten._set_item.t %19, %2, %21 : !torch.list<int>, !torch.int, !torch.int -> !torch.list<int>
+      %23 = torch.aten.reshape %18, %19 : !torch.tensor, !torch.list<int> -> !torch.tensor
+      %24 = torch.aten.mul.Tensor %12, %23 : !torch.tensor, !torch.tensor -> !torch.tensor
+      torch.prim.If.yield %24 : !torch.tensor
+    } else {
+      torch.prim.If.yield %12 : !torch.tensor
+    }
+    %15 = torch.aten.ge.int %arg5, %int0 : !torch.int, !torch.int -> !torch.bool
+    %16 = torch.prim.If %15 -> (!torch.tensor) {
+      %18 = torch.aten.ne.Scalar %5, %arg5 : !torch.tensor, !torch.int -> !torch.tensor
+      %19 = torch.aten.where.ScalarOther %18, %14, %int0 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      torch.prim.If.yield %19 : !torch.tensor
+    } else {
+      torch.prim.If.yield %14 : !torch.tensor
+    }
+    %17 = torch.aten.mul.Tensor %7, %16 : !torch.tensor, !torch.tensor -> !torch.tensor
+    return %17 : !torch.tensor
+  }
+  func.func @__torch__.torch._decomp.decompositions.nll_loss2d_backward(%arg0: !torch.tensor, %arg1: !torch.tensor, %arg2: !torch.tensor, %arg3: !torch.optional<tensor>, %arg4: !torch.int, %arg5: !torch.int, %arg6: !torch.tensor) -> !torch.tensor {
+    %true = torch.constant.bool true
+    %float-1.000000e00 = torch.constant.float -1.000000e+00
+    %str = torch.constant.str "expected total_weight to be a single element tensor, got: {} ( {}, elements)"
+    %str_0 = torch.constant.str "size mismatch (got input: {}, target: {}"
+    %false = torch.constant.bool false
+    %str_1 = torch.constant.str "only batches of spatial targets supported (3D tensors) but got targets of dimension: {}"
+    %none = torch.constant.none
+    %str_2 = torch.constant.str "AssertionError: "
+    %str_3 = torch.constant.str "only batches of spatial inputs supported (4D tensors), but got input of dimension: {}"
+    %int4 = torch.constant.int 4
+    %int3 = torch.constant.int 3
+    %int0 = torch.constant.int 0
+    %int2 = torch.constant.int 2
+    %int1 = torch.constant.int 1
+    %0 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+    %1 = torch.aten.eq.int %0, %int4 : !torch.int, !torch.int -> !torch.bool
+    torch.prim.If %1 -> () {
+      torch.prim.If.yield
+    } else {
+      %29 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+      %30 = torch.aten.format(%str_3, %29) : !torch.str, !torch.int -> !torch.str
+      %31 = torch.aten.add.str %str_2, %30 : !torch.str, !torch.str -> !torch.str
+      torch.prim.RaiseException %31, %none : !torch.str, !torch.none
+      torch.prim.If.yield
+    }
+    %2 = torch.aten.dim %arg2 : !torch.tensor -> !torch.int
+    %3 = torch.aten.eq.int %2, %int3 : !torch.int, !torch.int -> !torch.bool
+    torch.prim.If %3 -> () {
+      torch.prim.If.yield
+    } else {
+      %29 = torch.aten.dim %arg2 : !torch.tensor -> !torch.int
+      %30 = torch.aten.format(%str_1, %29) : !torch.str, !torch.int -> !torch.str
+      %31 = torch.aten.add.str %str_2, %30 : !torch.str, !torch.str -> !torch.str
+      torch.prim.RaiseException %31, %none : !torch.str, !torch.none
+      torch.prim.If.yield
+    }
+    %4 = torch.aten.size.int %arg1, %int0 : !torch.tensor, !torch.int -> !torch.int
+    %5 = torch.aten.size.int %arg2, %int0 : !torch.tensor, !torch.int -> !torch.int
+    %6 = torch.aten.eq.int %4, %5 : !torch.int, !torch.int -> !torch.bool
+    %7 = torch.prim.If %6 -> (!torch.bool) {
+      %29 = torch.aten.size.int %arg1, %int2 : !torch.tensor, !torch.int -> !torch.int
+      %30 = torch.aten.size.int %arg2, %int1 : !torch.tensor, !torch.int -> !torch.int
+      %31 = torch.aten.eq.int %29, %30 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If.yield %31 : !torch.bool
+    } else {
+      torch.prim.If.yield %false : !torch.bool
+    }
+    %8 = torch.prim.If %7 -> (!torch.bool) {
+      %29 = torch.aten.size.int %arg1, %int3 : !torch.tensor, !torch.int -> !torch.int
+      %30 = torch.aten.size.int %arg2, %int2 : !torch.tensor, !torch.int -> !torch.int
+      %31 = torch.aten.eq.int %29, %30 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If.yield %31 : !torch.bool
+    } else {
+      torch.prim.If.yield %false : !torch.bool
+    }
+    torch.prim.If %8 -> () {
+      torch.prim.If.yield
+    } else {
+      %29 = torch.aten.size %arg1 : !torch.tensor -> !torch.list<int>
+      %30 = torch.aten.size %arg2 : !torch.tensor -> !torch.list<int>
+      %31 = torch.aten.format(%str_0, %29, %30) : !torch.str, !torch.list<int>, !torch.list<int> -> !torch.str
+      %32 = torch.aten.add.str %str_2, %31 : !torch.str, !torch.str -> !torch.str
+      torch.prim.RaiseException %32, %none : !torch.str, !torch.none
+      torch.prim.If.yield
+    }
+    %9 = torch.aten.numel %arg6 : !torch.tensor -> !torch.int
+    %10 = torch.aten.eq.int %9, %int1 : !torch.int, !torch.int -> !torch.bool
+    torch.prim.If %10 -> () {
+      torch.prim.If.yield
+    } else {
+      %29 = torch.aten.size %arg6 : !torch.tensor -> !torch.list<int>
+      %30 = torch.aten.numel %arg6 : !torch.tensor -> !torch.int
+      %31 = torch.aten.format(%str, %29, %30) : !torch.str, !torch.list<int>, !torch.int -> !torch.str
+      %32 = torch.aten.add.str %str_2, %31 : !torch.str, !torch.str -> !torch.str
+      torch.prim.RaiseException %32, %none : !torch.str, !torch.none
+      torch.prim.If.yield
+    }
+    %11 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+    %12 = torch.aten.lt.int %11, %int2 : !torch.int, !torch.int -> !torch.bool
+    %13 = torch.prim.If %12 -> (!torch.int) {
+      torch.prim.If.yield %int0 : !torch.int
+    } else {
+      torch.prim.If.yield %int1 : !torch.int
+    }
+    %14 = torch.aten.eq.int %arg4, %int1 : !torch.int, !torch.int -> !torch.bool
+    %15 = torch.prim.If %14 -> (!torch.tensor) {
+      %29 = torch.aten.div.Tensor %arg0, %arg6 : !torch.tensor, !torch.tensor -> !torch.tensor
+      torch.prim.If.yield %29 : !torch.tensor
+    } else {
+      torch.prim.If.yield %arg0 : !torch.tensor
+    }
+    %16 = torch.aten.unsqueeze %arg2, %13 : !torch.tensor, !torch.int -> !torch.tensor
+    %17 = torch.aten.zeros_like %arg1, %none, %none, %none, %none, %none : !torch.tensor, !torch.none, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+    %18 = torch.operator "aten.scatter.value"(%17, %13, %16, %float-1.000000e00) : (!torch.tensor, !torch.int, !torch.tensor, !torch.float) -> !torch.tensor
+    %19 = torch.aten.dim %18 : !torch.tensor -> !torch.int
+    %20 = torch.aten.dim %15 : !torch.tensor -> !torch.int
+    %21 = torch.aten.gt.int %19, %20 : !torch.int, !torch.int -> !torch.bool
+    %22 = torch.prim.If %21 -> (!torch.bool) {
+      %29 = torch.aten.dim %15 : !torch.tensor -> !torch.int
+      %30 = torch.aten.gt.int %29, %int0 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If.yield %30 : !torch.bool
+    } else {
+      torch.prim.If.yield %false : !torch.bool
+    }
+    %23 = torch.prim.If %22 -> (!torch.tensor) {
+      %29 = torch.aten.unsqueeze %15, %13 : !torch.tensor, !torch.int -> !torch.tensor
+      torch.prim.If.yield %29 : !torch.tensor
+    } else {
+      torch.prim.If.yield %15 : !torch.tensor
+    }
+    %24 = torch.aten.__isnot__ %arg3, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+    %25 = torch.prim.If %24 -> (!torch.tensor) {
+      %29 = torch.prim.unchecked_cast %arg3 : !torch.optional<tensor> -> !torch.tensor
+      %30 = torch.prim.ListConstruct  : () -> !torch.list<int>
+      %31 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+      torch.prim.Loop %31, %true, init() {
+      ^bb0(%arg7: !torch.int):
+        %36 = torch.aten.append.t %30, %int1 : !torch.list<int>, !torch.int -> !torch.list<int>
+        torch.prim.Loop.condition %true, iter()
+      } : (!torch.int, !torch.bool) -> ()
+      %32 = torch.aten.size.int %29, %int0 : !torch.tensor, !torch.int -> !torch.int
+      %33 = torch.aten._set_item.t %30, %13, %32 : !torch.list<int>, !torch.int, !torch.int -> !torch.list<int>
+      %34 = torch.aten.reshape %29, %30 : !torch.tensor, !torch.list<int> -> !torch.tensor
+      %35 = torch.aten.mul.Tensor %23, %34 : !torch.tensor, !torch.tensor -> !torch.tensor
+      torch.prim.If.yield %35 : !torch.tensor
+    } else {
+      torch.prim.If.yield %23 : !torch.tensor
+    }
+    %26 = torch.aten.ge.int %arg5, %int0 : !torch.int, !torch.int -> !torch.bool
+    %27 = torch.prim.If %26 -> (!torch.tensor) {
+      %29 = torch.aten.ne.Scalar %16, %arg5 : !torch.tensor, !torch.int -> !torch.tensor
+      %30 = torch.aten.where.ScalarOther %29, %25, %int0 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      torch.prim.If.yield %30 : !torch.tensor
+    } else {
+      torch.prim.If.yield %25 : !torch.tensor
+    }
+    %28 = torch.aten.mul.Tensor %18, %27 : !torch.tensor, !torch.tensor -> !torch.tensor
+    return %28 : !torch.tensor
+  }
+  func.func @__torch__.torch._decomp.decompositions._log_softmax_backward_data(%arg0: !torch.tensor, %arg1: !torch.tensor, %arg2: !torch.int, %arg3: !torch.int) -> !torch.tensor {
+    %int1 = torch.constant.int 1
+    %none = torch.constant.none
+    %true = torch.constant.bool true
+    %0 = torch.aten.exp %arg1 : !torch.tensor -> !torch.tensor
+    %1 = torch.prim.ListConstruct %arg2 : (!torch.int) -> !torch.list<int>
+    %2 = torch.aten.sum.dim_IntList %arg0, %1, %true, %none : !torch.tensor, !torch.list<int>, !torch.bool, !torch.none -> !torch.tensor
+    %3 = torch.aten.mul.Tensor %0, %2 : !torch.tensor, !torch.tensor -> !torch.tensor
+    %4 = torch.aten.sub.Tensor %arg0, %3, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+    return %4 : !torch.tensor
+  }
+  func.func @__torch__.torch._decomp.decompositions._softmax_backward_data(%arg0: !torch.tensor, %arg1: !torch.tensor, %arg2: !torch.int, %arg3: !torch.int) -> !torch.tensor {
+    %int1 = torch.constant.int 1
+    %none = torch.constant.none
+    %true = torch.constant.bool true
+    %0 = torch.aten.mul.Tensor %arg0, %arg1 : !torch.tensor, !torch.tensor -> !torch.tensor
+    %1 = torch.prim.ListConstruct %arg2 : (!torch.int) -> !torch.list<int>
+    %2 = torch.aten.sum.dim_IntList %0, %1, %true, %none : !torch.tensor, !torch.list<int>, !torch.bool, !torch.none -> !torch.tensor
+    %3 = torch.aten.mul.Tensor %arg1, %2 : !torch.tensor, !torch.tensor -> !torch.tensor
+    %4 = torch.aten.sub.Tensor %0, %3, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+    return %4 : !torch.tensor
+  }
+  func.func @__torch__.torch._decomp.decompositions.log_sigmoid_forward(%arg0: !torch.tensor) -> !torch.tuple<tensor, tensor> {
+    %int1 = torch.constant.int 1
+    %none = torch.constant.none
+    %int0 = torch.constant.int 0
+    %0 = torch.prim.ListConstruct  : () -> !torch.list<int>
+    %1 = torch.aten.new_zeros %arg0, %0, %none, %none, %none, %none : !torch.tensor, !torch.list<int>, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+    %2 = torch.aten.minimum %1, %arg0 : !torch.tensor, !torch.tensor -> !torch.tensor
+    %3 = torch.aten.abs %arg0 : !torch.tensor -> !torch.tensor
+    %4 = torch.aten.neg %3 : !torch.tensor -> !torch.tensor
+    %5 = torch.aten.exp %4 : !torch.tensor -> !torch.tensor
+    %6 = torch.operator "prim.is_cuda"(%arg0) : (!torch.tensor) -> !torch.bool
+    %7 = torch.prim.If %6 -> (!torch.tensor) {
+      %11 = torch.prim.ListConstruct %int0 : (!torch.int) -> !torch.list<int>
+      %12 = torch.aten.new_zeros %arg0, %11, %none, %none, %none, %none : !torch.tensor, !torch.list<int>, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+      torch.prim.If.yield %12 : !torch.tensor
+    } else {
+      torch.prim.If.yield %5 : !torch.tensor
+    }
+    %8 = torch.aten.log1p %5 : !torch.tensor -> !torch.tensor
+    %9 = torch.aten.sub.Tensor %2, %8, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+    %10 = torch.prim.TupleConstruct %9, %7 : !torch.tensor, !torch.tensor -> !torch.tuple<tensor, tensor>
+    return %10 : !torch.tuple<tensor, tensor>
+  }
+  func.func @__torch__.torch._decomp.decompositions_for_jvp.native_layer_norm_backward(%arg0: !torch.tensor, %arg1: !torch.tensor, %arg2: !torch.list<int>, %arg3: !torch.tensor, %arg4: !torch.tensor, %arg5: !torch.optional<tensor>, %arg6: !torch.optional<tensor>, %arg7: !torch.list<bool>) -> !torch.tuple<optional<tensor>, optional<tensor>, optional<tensor>> {
+    %false = torch.constant.bool false
+    %true = torch.constant.bool true
+    %none = torch.constant.none
+    %int0 = torch.constant.int 0
+    %int1 = torch.constant.int 1
+    %int2 = torch.constant.int 2
+    %0 = torch.aten.size %arg1 : !torch.tensor -> !torch.list<int>
+    %1 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+    %2 = torch.aten.len.t %arg2 : !torch.list<int> -> !torch.int
+    %3 = torch.aten.sub.int %1, %2 : !torch.int, !torch.int -> !torch.int
+    %4 = torch.aten.slice.t %0, %3, %none, %int1 : !torch.list<int>, !torch.int, !torch.none, !torch.int -> !torch.list<int>
+    %5 = torch.aten.slice.t %0, %none, %3, %int1 : !torch.list<int>, !torch.none, !torch.int, !torch.int -> !torch.list<int>
+    %6 = torch.prim.ListConstruct  : () -> !torch.list<int>
+    %7 = torch.aten.__range_length %3, %1, %int1 : !torch.int, !torch.int, !torch.int -> !torch.int
+    torch.prim.Loop %7, %true, init() {
+    ^bb0(%arg8: !torch.int):
+      %17 = torch.aten.__derive_index %arg8, %3, %int1 : !torch.int, !torch.int, !torch.int -> !torch.int
+      %18 = torch.aten.append.t %6, %17 : !torch.list<int>, !torch.int -> !torch.list<int>
+      torch.prim.Loop.condition %true, iter()
+    } : (!torch.int, !torch.bool) -> ()
+    %8 = torch.prim.ListConstruct  : () -> !torch.list<int>
+    %9 = torch.aten.__range_length %int0, %3, %int1 : !torch.int, !torch.int, !torch.int -> !torch.int
+    torch.prim.Loop %9, %true, init() {
+    ^bb0(%arg8: !torch.int):
+      %17 = torch.aten.__derive_index %arg8, %int0, %int1 : !torch.int, !torch.int, !torch.int -> !torch.int
+      %18 = torch.aten.append.t %8, %17 : !torch.list<int>, !torch.int -> !torch.list<int>
+      torch.prim.Loop.condition %true, iter()
+    } : (!torch.int, !torch.bool) -> ()
+    %10 = torch.aten.len.t %4 : !torch.list<int> -> !torch.int
+    %11 = torch.prim.Loop %10, %true, init(%int1) {
+    ^bb0(%arg8: !torch.int, %arg9: !torch.int):
+      %17 = torch.aten.__getitem__.t %4, %arg8 : !torch.list<int>, !torch.int -> !torch.int
+      %18 = torch.aten.mul.int %arg9, %17 : !torch.int, !torch.int -> !torch.int
+      torch.prim.Loop.condition %true, iter(%18 : !torch.int)
+    } : (!torch.int, !torch.bool, !torch.int) -> !torch.int
+    %12 = torch.aten.len.t %5 : !torch.list<int> -> !torch.int
+    %13 = torch.prim.Loop %12, %true, init(%int1) {
+    ^bb0(%arg8: !torch.int, %arg9: !torch.int):
+      %17 = torch.aten.__getitem__.t %5, %arg8 : !torch.list<int>, !torch.int -> !torch.int
+      %18 = torch.aten.mul.int %arg9, %17 : !torch.int, !torch.int -> !torch.int
+      torch.prim.Loop.condition %true, iter(%18 : !torch.int)
+    } : (!torch.int, !torch.bool, !torch.int) -> !torch.int
+    %14 = torch.aten.le.int %13, %int0 : !torch.int, !torch.int -> !torch.bool
+    %15 = torch.prim.If %14 -> (!torch.bool) {
+      torch.prim.If.yield %true : !torch.bool
+    } else {
+      %17 = torch.aten.le.int %11, %int0 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If.yield %17 : !torch.bool
+    }
+    %16 = torch.prim.If %15 -> (!torch.tuple<optional<tensor>, optional<tensor>, optional<tensor>>) {
+      %17 = torch.aten.new_zeros %arg1, %0, %none, %none, %none, %none : !torch.tensor, !torch.list<int>, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+      %18 = torch.aten.slice.t %0, %3, %none, %int1 : !torch.list<int>, !torch.int, !torch.none, !torch.int -> !torch.list<int>
+      %19 = torch.aten.new_zeros %arg1, %18, %none, %none, %none, %none : !torch.tensor, !torch.list<int>, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+      %20 = torch.aten.slice.t %0, %3, %none, %int1 : !torch.list<int>, !torch.int, !torch.none, !torch.int -> !torch.list<int>
+      %21 = torch.aten.new_zeros %arg1, %20, %none, %none, %none, %none : !torch.tensor, !torch.list<int>, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+      %22 = torch.prim.TupleConstruct %17, %19, %21 : !torch.tensor, !torch.tensor, !torch.tensor -> !torch.tuple<tensor, tensor, tensor>
+      %23 = torch.derefine %22 : !torch.tuple<tensor, tensor, tensor> to !torch.tuple<optional<tensor>, optional<tensor>, optional<tensor>>
+      torch.prim.If.yield %23 : !torch.tuple<optional<tensor>, optional<tensor>, optional<tensor>>
+    } else {
+      %17 = torch.aten.mean.dim %arg1, %6, %true, %none : !torch.tensor, !torch.list<int>, !torch.bool, !torch.none -> !torch.tensor
+      %18 = torch.aten.var.dim %arg1, %6, %false, %true : !torch.tensor, !torch.list<int>, !torch.bool, !torch.bool -> !torch.tensor
+      %19 = torch.aten.reciprocal %arg4 : !torch.tensor -> !torch.tensor
+      %20 = torch.aten.pow.Tensor_Scalar %19, %int2 : !torch.tensor, !torch.int -> !torch.tensor
+      %21 = torch.aten.sub.Tensor %20, %18, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      %22 = torch.aten.detach %21 : !torch.tensor -> !torch.tensor
+      %23 = torch.aten.add.Tensor %18, %22, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      %24 = torch.aten.sqrt %23 : !torch.tensor -> !torch.tensor
+      %25 = torch.aten.reciprocal %24 : !torch.tensor -> !torch.tensor
+      %26 = torch.aten.sub.Tensor %arg1, %17, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      %27 = torch.aten.mul.Tensor %26, %25 : !torch.tensor, !torch.tensor -> !torch.tensor
+      %28 = torch.aten.__isnot__ %arg5, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+      %29 = torch.prim.If %28 -> (!torch.tensor) {
+        %46 = torch.prim.unchecked_cast %arg5 : !torch.optional<tensor> -> !torch.tensor
+        %47 = torch.aten.mul.Tensor %arg0, %46 : !torch.tensor, !torch.tensor -> !torch.tensor
+        torch.prim.If.yield %47 : !torch.tensor
+      } else {
+        torch.prim.If.yield %arg0 : !torch.tensor
+      }
+      %30 = torch.aten.mul.Scalar %29, %11 : !torch.tensor, !torch.int -> !torch.tensor
+      %31 = torch.aten.sum.dim_IntList %29, %6, %true, %none : !torch.tensor, !torch.list<int>, !torch.bool, !torch.none -> !torch.tensor
+      %32 = torch.aten.mul.Tensor %29, %27 : !torch.tensor, !torch.tensor -> !torch.tensor
+      %33 = torch.aten.sum.dim_IntList %32, %6, %true, %none : !torch.tensor, !torch.list<int>, !torch.bool, !torch.none -> !torch.tensor
+      %34 = torch.aten.mul.Tensor %27, %33 : !torch.tensor, !torch.tensor -> !torch.tensor
+      %35 = torch.aten.sub.Tensor %30, %31, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      %36 = torch.aten.sub.Tensor %35, %34, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      %37 = torch.aten.__getitem__.t %arg7, %int0 : !torch.list<bool>, !torch.int -> !torch.bool
+      %38 = torch.prim.If %37 -> (!torch.tensor) {
+        %46 = torch.aten.div.Scalar %25, %11 : !torch.tensor, !torch.int -> !torch.tensor
+        %47 = torch.aten.mul.Tensor %46, %36 : !torch.tensor, !torch.tensor -> !torch.tensor
+        torch.prim.If.yield %47 : !torch.tensor
+      } else {
+        %46 = torch.aten.zeros_like %arg1, %none, %none, %none, %none, %none : !torch.tensor, !torch.none, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+        torch.prim.If.yield %46 : !torch.tensor
+      }
+      %39 = torch.aten.__getitem__.t %arg7, %int1 : !torch.list<bool>, !torch.int -> !torch.bool
+      %40 = torch.prim.If %39 -> (!torch.bool) {
+        %46 = torch.aten.__isnot__ %arg5, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+        torch.prim.If.yield %46 : !torch.bool
+      } else {
+        torch.prim.If.yield %false : !torch.bool
+      }
+      %41 = torch.prim.If %40 -> (!torch.tensor) {
+        %46 = torch.aten.len.t %8 : !torch.list<int> -> !torch.int
+        %47 = torch.aten.gt.int %46, %int0 : !torch.int, !torch.int -> !torch.bool
+        %48 = torch.prim.If %47 -> (!torch.tensor) {
+          %49 = torch.aten.mul.Tensor %arg0, %27 : !torch.tensor, !torch.tensor -> !torch.tensor
+          %50 = torch.aten.sum.dim_IntList %49, %8, %false, %none : !torch.tensor, !torch.list<int>, !torch.bool, !torch.none -> !torch.tensor
+          torch.prim.If.yield %50 : !torch.tensor
+        } else {
+          %49 = torch.aten.mul.Tensor %arg0, %27 : !torch.tensor, !torch.tensor -> !torch.tensor
+          torch.prim.If.yield %49 : !torch.tensor
+        }
+        torch.prim.If.yield %48 : !torch.tensor
+      } else {
+        %46 = torch.aten.__isnot__ %arg5, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+        %47 = torch.prim.If %46 -> (!torch.tensor) {
+          %48 = torch.prim.unchecked_cast %arg5 : !torch.optional<tensor> -> !torch.tensor
+          %49 = torch.aten.zeros_like %48, %none, %none, %none, %none, %none : !torch.tensor, !torch.none, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+          torch.prim.If.yield %49 : !torch.tensor
+        } else {
+          %48 = torch.prim.ListConstruct  : () -> !torch.list<int>
+          %49 = torch.aten.zeros %48, %none, %none, %none, %none : !torch.list<int>, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+          torch.prim.If.yield %49 : !torch.tensor
+        }
+        torch.prim.If.yield %47 : !torch.tensor
+      }
+      %42 = torch.aten.__getitem__.t %arg7, %int2 : !torch.list<bool>, !torch.int -> !torch.bool
+      %43 = torch.prim.If %42 -> (!torch.bool) {
+        %46 = torch.aten.__isnot__ %arg6, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+        torch.prim.If.yield %46 : !torch.bool
+      } else {
+        torch.prim.If.yield %false : !torch.bool
+      }
+      %44 = torch.prim.If %43 -> (!torch.tensor) {
+        %46 = torch.aten.len.t %8 : !torch.list<int> -> !torch.int
+        %47 = torch.aten.gt.int %46, %int0 : !torch.int, !torch.int -> !torch.bool
+        %48 = torch.prim.If %47 -> (!torch.tensor) {
+          %49 = torch.aten.sum.dim_IntList %arg0, %8, %false, %none : !torch.tensor, !torch.list<int>, !torch.bool, !torch.none -> !torch.tensor
+          torch.prim.If.yield %49 : !torch.tensor
+        } else {
+          %49 = torch.aten.clone %arg0, %none : !torch.tensor, !torch.none -> !torch.tensor
+          torch.prim.If.yield %49 : !torch.tensor
+        }
+        torch.prim.If.yield %48 : !torch.tensor
+      } else {
+        %46 = torch.aten.__isnot__ %arg6, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+        %47 = torch.prim.If %46 -> (!torch.tensor) {
+          %48 = torch.prim.unchecked_cast %arg6 : !torch.optional<tensor> -> !torch.tensor
+          %49 = torch.aten.zeros_like %48, %none, %none, %none, %none, %none : !torch.tensor, !torch.none, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+          torch.prim.If.yield %49 : !torch.tensor
+        } else {
+          %48 = torch.prim.ListConstruct  : () -> !torch.list<int>
+          %49 = torch.aten.zeros %48, %none, %none, %none, %none : !torch.list<int>, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+          torch.prim.If.yield %49 : !torch.tensor
+        }
+        torch.prim.If.yield %47 : !torch.tensor
+      }
+      %45 = torch.prim.TupleConstruct %38, %41, %44 : !torch.tensor, !torch.tensor, !torch.tensor -> !torch.tuple<optional<tensor>, optional<tensor>, optional<tensor>>
+      torch.prim.If.yield %45 : !torch.tuple<optional<tensor>, optional<tensor>, optional<tensor>>
+    }
+    return %16 : !torch.tuple<optional<tensor>, optional<tensor>, optional<tensor>>
+  }
+  func.func @__torch__.torch._decomp.decompositions_for_jvp.recompute_mean_var(%arg0: !torch.tensor, %arg1: !torch.tensor, %arg2: !torch.list<int>, %arg3: !torch.bool) -> !torch.tuple<tensor, tensor> {
+    %false = torch.constant.bool false
+    %none = torch.constant.none
+    %int1 = torch.constant.int 1
+    %int2 = torch.constant.int 2
+    %0 = torch.aten.mean.dim %arg0, %arg2, %arg3, %none : !torch.tensor, !torch.list<int>, !torch.bool, !torch.none -> !torch.tensor
+    %1 = torch.aten.var.dim %arg0, %arg2, %false, %arg3 : !torch.tensor, !torch.list<int>, !torch.bool, !torch.bool -> !torch.tensor
+    %2 = torch.aten.reciprocal %arg1 : !torch.tensor -> !torch.tensor
+    %3 = torch.aten.mul.Scalar %2, %int1 : !torch.tensor, !torch.int -> !torch.tensor
+    %4 = torch.aten.pow.Tensor_Scalar %3, %int2 : !torch.tensor, !torch.int -> !torch.tensor
+    %5 = torch.aten.sub.Tensor %4, %1, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+    %6 = torch.aten.detach %5 : !torch.tensor -> !torch.tensor
+    %7 = torch.aten.add.Tensor %1, %6, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+    %8 = torch.aten.sqrt %7 : !torch.tensor -> !torch.tensor
+    %9 = torch.aten.reciprocal %8 : !torch.tensor -> !torch.tensor
+    %10 = torch.aten.mul.Scalar %9, %int1 : !torch.tensor, !torch.int -> !torch.tensor
+    %11 = torch.prim.TupleConstruct %0, %10 : !torch.tensor, !torch.tensor -> !torch.tuple<tensor, tensor>
+    return %11 : !torch.tuple<tensor, tensor>
+  }
+  func.func @__torch__.torch._decomp.decompositions_for_jvp.native_batch_norm_backward(%arg0: !torch.tensor, %arg1: !torch.tensor, %arg2: !torch.optional<tensor>, %arg3: !torch.optional<tensor>, %arg4: !torch.optional<tensor>, %arg5: !torch.optional<tensor>, %arg6: !torch.optional<tensor>, %arg7: !torch.bool, %arg8: !torch.float, %arg9: !torch.list<bool>) -> !torch.tuple<tensor, optional<tensor>, optional<tensor>> {
+    %str = torch.constant.str "AssertionError: "
+    %true = torch.constant.bool true
+    %str_0 = torch.constant.str "AssertionError: when train=True, save_mean and save_invstd are required"
+    %false = torch.constant.bool false
+    %none = torch.constant.none
+    %str_1 = torch.constant.str "AssertionError: rank of the input must be at least 2"
+    %int2 = torch.constant.int 2
+    %int1 = torch.constant.int 1
+    %int0 = torch.constant.int 0
+    %float1.000000e00 = torch.constant.float 1.000000e+00
+    %0 = torch.prim.Uninitialized : !torch.tensor
+    %1 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+    %2 = torch.aten.ge.int %1, %int2 : !torch.int, !torch.int -> !torch.bool
+    torch.prim.If %2 -> () {
+      torch.prim.If.yield
+    } else {
+      torch.prim.RaiseException %str_1, %none : !torch.str, !torch.none
+      torch.prim.If.yield
+    }
+    %3 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+    %4 = torch.prim.Loop %3, %true, init(%int1) {
+    ^bb0(%arg10: !torch.int, %arg11: !torch.int):
+      %34 = torch.aten.size.int %arg1, %arg10 : !torch.tensor, !torch.int -> !torch.int
+      %35 = torch.aten.mul.int %arg11, %34 : !torch.int, !torch.int -> !torch.int
+      torch.prim.Loop.condition %true, iter(%35 : !torch.int)
+    } : (!torch.int, !torch.bool, !torch.int) -> !torch.int
+    %5 = torch.aten.size.int %arg1, %int1 : !torch.tensor, !torch.int -> !torch.int
+    %6 = torch.operator "aten.div.int"(%4, %5) : (!torch.int, !torch.int) -> !torch.float
+    %7:2 = torch.prim.If %arg7 -> (!torch.tensor, !torch.tensor) {
+      %34 = torch.aten.__isnot__ %arg5, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+      %35 = torch.prim.If %34 -> (!torch.bool) {
+        %52 = torch.aten.__isnot__ %arg6, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+        torch.prim.If.yield %52 : !torch.bool
+      } else {
+        torch.prim.If.yield %false : !torch.bool
+      }
+      torch.prim.If %35 -> () {
+        torch.prim.If.yield
+      } else {
+        torch.prim.RaiseException %str_0, %none : !torch.str, !torch.none
+        torch.prim.If.yield
+      }
+      %36 = torch.prim.ListConstruct %int0 : (!torch.int) -> !torch.list<int>
+      %37 = torch.aten.dim %arg1 : !torch.tensor -> !torch.int
+      %38 = torch.prim.ListConstruct  : () -> !torch.list<int>
+      %39 = torch.aten.__range_length %int2, %37, %int1 : !torch.int, !torch.int, !torch.int -> !torch.int
+      torch.prim.Loop %39, %true, init() {
+      ^bb0(%arg10: !torch.int):
+        %52 = torch.aten.__derive_index %arg10, %int2, %int1 : !torch.int, !torch.int, !torch.int -> !torch.int
+        %53 = torch.aten.append.t %38, %52 : !torch.list<int>, !torch.int -> !torch.list<int>
+        torch.prim.Loop.condition %true, iter()
+      } : (!torch.int, !torch.bool) -> ()
+      %40 = torch.aten.add.t %36, %38 : !torch.list<int>, !torch.list<int> -> !torch.list<int>
+      %41 = torch.aten.__isnot__ %arg6, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+      %42 = torch.prim.If %41 -> (!torch.tensor) {
+        %52 = torch.prim.unchecked_cast %arg6 : !torch.optional<tensor> -> !torch.tensor
+        torch.prim.If.yield %52 : !torch.tensor
+      } else {
+        torch.prim.RaiseException %str, %none : !torch.str, !torch.none
+        torch.prim.If.yield %0 : !torch.tensor
+      }
+      %43 = torch.aten.mean.dim %arg1, %40, %false, %none : !torch.tensor, !torch.list<int>, !torch.bool, !torch.none -> !torch.tensor
+      %44 = torch.aten.var.dim %arg1, %40, %false, %false : !torch.tensor, !torch.list<int>, !torch.bool, !torch.bool -> !torch.tensor
+      %45 = torch.aten.reciprocal %42 : !torch.tensor -> !torch.tensor
+      %46 = torch.aten.pow.Tensor_Scalar %45, %int2 : !torch.tensor, !torch.int -> !torch.tensor
+      %47 = torch.aten.sub.Tensor %46, %44, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      %48 = torch.aten.detach %47 : !torch.tensor -> !torch.tensor
+      %49 = torch.aten.add.Tensor %44, %48, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      %50 = torch.aten.sqrt %49 : !torch.tensor -> !torch.tensor
+      %51 = torch.aten.reciprocal %50 : !torch.tensor -> !torch.tensor
+      torch.prim.If.yield %43, %51 : !torch.tensor, !torch.tensor
+    } else {
+      %34 = torch.aten.__isnot__ %arg3, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+      %35 = torch.prim.If %34 -> (!torch.bool) {
+        %39 = torch.prim.unchecked_cast %arg3 : !torch.optional<tensor> -> !torch.tensor
+        %40 = torch.aten.__isnot__ %arg4, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+        torch.prim.If.yield %40 : !torch.bool
+      } else {
+        torch.prim.If.yield %false : !torch.bool
+      }
+      %36:2 = torch.prim.If %35 -> (!torch.tensor, !torch.tensor) {
+        %39 = torch.prim.unchecked_cast %arg3 : !torch.optional<tensor> -> !torch.tensor
+        %40 = torch.prim.unchecked_cast %arg4 : !torch.optional<tensor> -> !torch.tensor
+        torch.prim.If.yield %40, %39 : !torch.tensor, !torch.tensor
+      } else {
+        torch.prim.RaiseException %str, %none : !torch.str, !torch.none
+        torch.prim.If.yield %0, %0 : !torch.tensor, !torch.tensor
+      }
+      %37 = torch.aten.add.Scalar %36#0, %arg8, %int1 : !torch.tensor, !torch.float, !torch.int -> !torch.tensor
+      %38 = torch.aten.rsqrt %37 : !torch.tensor -> !torch.tensor
+      torch.prim.If.yield %36#1, %38 : !torch.tensor, !torch.tensor
+    }
+    %8 = torch.prim.ListConstruct %int1 : (!torch.int) -> !torch.list<int>
+    %9 = torch.operator "aten.mul.left_t"(%8, %1) : (!torch.list<int>, !torch.int) -> !torch.list<int>
+    %10 = torch.aten.size.int %arg1, %int1 : !torch.tensor, !torch.int -> !torch.int
+    %11 = torch.aten._set_item.t %9, %int1, %10 : !torch.list<int>, !torch.int, !torch.int -> !torch.list<int>
+    %12 = torch.prim.ListConstruct  : () -> !torch.list<int>
+    torch.prim.Loop %1, %true, init() {
+    ^bb0(%arg10: !torch.int):
+      %34 = torch.aten.ne.int %arg10, %int1 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If %34 -> () {
+        %35 = torch.aten.append.t %12, %arg10 : !torch.list<int>, !torch.int -> !torch.list<int>
+        torch.prim.If.yield
+      } else {
+        torch.prim.If.yield
+      }
+      torch.prim.Loop.condition %true, iter()
+    } : (!torch.int, !torch.bool) -> ()
+    %13 = torch.aten.reshape %7#0, %9 : !torch.tensor, !torch.list<int> -> !torch.tensor
+    %14 = torch.aten.div.float %float1.000000e00, %6 : !torch.float, !torch.float -> !torch.float
+    %15 = torch.aten.sum.dim_IntList %arg0, %12, %false, %none : !torch.tensor, !torch.list<int>, !torch.bool, !torch.none -> !torch.tensor
+    %16 = torch.aten.sub.Tensor %arg1, %13, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+    %17 = torch.aten.mul.Tensor %arg0, %16 : !torch.tensor, !torch.tensor -> !torch.tensor
+    %18 = torch.aten.sum.dim_IntList %17, %12, %false, %none : !torch.tensor, !torch.list<int>, !torch.bool, !torch.none -> !torch.tensor
+    %19 = torch.aten.mul.Scalar %15, %14 : !torch.tensor, !torch.float -> !torch.tensor
+    %20 = torch.aten.reshape %19, %9 : !torch.tensor, !torch.list<int> -> !torch.tensor
+    %21 = torch.aten.mul.Scalar %18, %14 : !torch.tensor, !torch.float -> !torch.tensor
+    %22 = torch.aten.mul.Tensor %7#1, %7#1 : !torch.tensor, !torch.tensor -> !torch.tensor
+    %23 = torch.aten.mul.Tensor %21, %22 : !torch.tensor, !torch.tensor -> !torch.tensor
+    %24 = torch.aten.reshape %23, %9 : !torch.tensor, !torch.list<int> -> !torch.tensor
+    %25 = torch.aten.__is__ %arg2, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+    %26 = torch.prim.If %25 -> (!torch.tensor) {
+      %34 = torch.aten.reshape %7#1, %9 : !torch.tensor, !torch.list<int> -> !torch.tensor
+      %35 = torch.aten.mul.Scalar %34, %float1.000000e00 : !torch.tensor, !torch.float -> !torch.tensor
+      torch.prim.If.yield %35 : !torch.tensor
+    } else {
+      %34 = torch.prim.unchecked_cast %arg2 : !torch.optional<tensor> -> !torch.tensor
+      %35 = torch.aten.mul.Tensor %7#1, %34 : !torch.tensor, !torch.tensor -> !torch.tensor
+      %36 = torch.aten.reshape %35, %9 : !torch.tensor, !torch.list<int> -> !torch.tensor
+      torch.prim.If.yield %36 : !torch.tensor
+    }
+    %27 = torch.prim.If %arg7 -> (!torch.tensor) {
+      %34 = torch.aten.sub.Tensor %arg1, %13, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      %35 = torch.aten.mul.Tensor %34, %24 : !torch.tensor, !torch.tensor -> !torch.tensor
+      %36 = torch.aten.sub.Tensor %arg0, %35, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      %37 = torch.aten.sub.Tensor %36, %20, %int1 : !torch.tensor, !torch.tensor, !torch.int -> !torch.tensor
+      %38 = torch.aten.mul.Tensor %37, %26 : !torch.tensor, !torch.tensor -> !torch.tensor
+      torch.prim.If.yield %38 : !torch.tensor
+    } else {
+      %34 = torch.aten.mul.Tensor %arg0, %26 : !torch.tensor, !torch.tensor -> !torch.tensor
+      torch.prim.If.yield %34 : !torch.tensor
+    }
+    %28 = torch.aten.__getitem__.t %arg9, %int1 : !torch.list<bool>, !torch.int -> !torch.bool
+    %29 = torch.prim.If %28 -> (!torch.tensor) {
+      %34 = torch.aten.mul.Tensor %18, %7#1 : !torch.tensor, !torch.tensor -> !torch.tensor
+      torch.prim.If.yield %34 : !torch.tensor
+    } else {
+      %34 = torch.aten.__isnot__ %arg2, %none : !torch.optional<tensor>, !torch.none -> !torch.bool
+      %35 = torch.prim.If %34 -> (!torch.tensor) {
+        %36 = torch.prim.unchecked_cast %arg2 : !torch.optional<tensor> -> !torch.tensor
+        %37 = torch.aten.zeros_like %36, %none, %none, %none, %none, %none : !torch.tensor, !torch.none, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+        torch.prim.If.yield %37 : !torch.tensor
+      } else {
+        %36 = torch.prim.ListConstruct  : () -> !torch.list<int>
+        %37 = torch.aten.zeros %36, %none, %none, %none, %none : !torch.list<int>, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+        torch.prim.If.yield %37 : !torch.tensor
+      }
+      torch.prim.If.yield %35 : !torch.tensor
+    }
+    %30 = torch.aten.__getitem__.t %arg9, %int2 : !torch.list<bool>, !torch.int -> !torch.bool
+    %31 = torch.prim.If %30 -> (!torch.tensor) {
+      torch.prim.If.yield %15 : !torch.tensor
+    } else {
+      %34 = torch.aten.zeros_like %15, %none, %none, %none, %none, %none : !torch.tensor, !torch.none, !torch.none, !torch.none, !torch.none, !torch.none -> !torch.tensor
+      torch.prim.If.yield %34 : !torch.tensor
+    }
+    %32 = torch.prim.TupleConstruct %27, %29, %31 : !torch.tensor, !torch.tensor, !torch.tensor -> !torch.tuple<tensor, tensor, tensor>
+    %33 = torch.derefine %32 : !torch.tuple<tensor, tensor, tensor> to !torch.tuple<tensor, optional<tensor>, optional<tensor>>
+    return %33 : !torch.tuple<tensor, optional<tensor>, optional<tensor>>
+  }
+  func.func @__torch__.torch._decomp.decompositions_for_jvp.prod(%arg0: !torch.list<int>) -> !torch.int {
+    %true = torch.constant.bool true
+    %int1 = torch.constant.int 1
+    %0 = torch.aten.len.t %arg0 : !torch.list<int> -> !torch.int
+    %1 = torch.prim.Loop %0, %true, init(%int1) {
+    ^bb0(%arg1: !torch.int, %arg2: !torch.int):
+      %2 = torch.aten.__getitem__.t %arg0, %arg1 : !torch.list<int>, !torch.int -> !torch.int
+      %3 = torch.aten.mul.int %arg2, %2 : !torch.int, !torch.int -> !torch.int
+      torch.prim.Loop.condition %true, iter(%3 : !torch.int)
+    } : (!torch.int, !torch.bool, !torch.int) -> !torch.int
+    return %1 : !torch.int
+  }
+  func.func @__torch__.torch._decomp.decompositions.cudnn_batch_norm_backward(%arg0: !torch.tensor, %arg1: !torch.tensor, %arg2: !torch.tensor, %arg3: !torch.optional<tensor>, %arg4: !torch.optional<tensor>, %arg5: !torch.optional<tensor>, %arg6: !torch.optional<tensor>, %arg7: !torch.float, %arg8: !torch.tensor) -> !torch.tuple<tensor, tensor, tensor> {
+    %true = torch.constant.bool true
+    %0 = torch.prim.ListConstruct %true, %true, %true : (!torch.bool, !torch.bool, !torch.bool) -> !torch.list<bool>
+    %result0, %result1, %result2 = torch.aten.native_batch_norm_backward %arg1, %arg0, %arg2, %arg3, %arg4, %arg5, %arg6, %true, %arg7, %0 : !torch.tensor, !torch.tensor, !torch.tensor, !torch.optional<tensor>, !torch.optional<tensor>, !torch.optional<tensor>, !torch.optional<tensor>, !torch.bool, !torch.float, !torch.list<bool> -> !torch.tensor, !torch.tensor, !torch.tensor
+    %1 = torch.prim.TupleConstruct %result0, %result1, %result2 : !torch.tensor, !torch.tensor, !torch.tensor -> !torch.tuple<tensor, tensor, tensor>
+    return %1 : !torch.tuple<tensor, tensor, tensor>
+  }
   func.func @__torch__.torch.jit._shape_functions.unary(%arg0: !torch.list<int>) -> !torch.list<int> {
     %true = torch.constant.bool true
     %0 = torch.prim.ListConstruct  : () -> !torch.list<int>
@@ -6920,6 +7760,82 @@ module {
   func.func @"__torch_mlir_shape_fn.aten.cat"(%arg0: !torch.list<list<int>>, %arg1: !torch.int) -> !torch.list<int> {
     %0 = call @__torch__.torch.jit._shape_functions.cat(%arg0, %arg1) : (!torch.list<list<int>>, !torch.int) -> !torch.list<int>
     return %0 : !torch.list<int>
+  }
+  func.func @"__torch_mlir_shape_fn.aten.upsample_nearest2d.vec"(%arg0: !torch.list<int>, %arg1: !torch.optional<list<int>>, %arg2: !torch.optional<list<float>>) -> !torch.list<int> {
+    %str = torch.constant.str "AssertionError: Either output_size or scale_factors must be presented"
+    %str_0 = torch.constant.str "AssertionError: "
+    %str_1 = torch.constant.str "AssertionError: Must specify exactly one of output_size and scale_factors"
+    %none = torch.constant.none
+    %int0 = torch.constant.int 0
+    %int1 = torch.constant.int 1
+    %int2 = torch.constant.int 2
+    %int3 = torch.constant.int 3
+    %0 = torch.prim.Uninitialized : !torch.optional<list<float>>
+    %1 = torch.prim.ListConstruct  : () -> !torch.list<int>
+    %2 = torch.aten.__getitem__.t %arg0, %int0 : !torch.list<int>, !torch.int -> !torch.int
+    %3 = torch.aten.append.t %1, %2 : !torch.list<int>, !torch.int -> !torch.list<int>
+    %4 = torch.aten.__getitem__.t %arg0, %int1 : !torch.list<int>, !torch.int -> !torch.int
+    %5 = torch.aten.append.t %1, %4 : !torch.list<int>, !torch.int -> !torch.list<int>
+    %6 = torch.aten.__isnot__ %arg1, %none : !torch.optional<list<int>>, !torch.none -> !torch.bool
+    %7 = torch.prim.If %6 -> (!torch.optional<list<float>>) {
+      %9 = torch.prim.unchecked_cast %arg1 : !torch.optional<list<int>> -> !torch.list<int>
+      %10 = torch.aten.__is__ %arg2, %none : !torch.optional<list<float>>, !torch.none -> !torch.bool
+      %11 = torch.prim.If %10 -> (!torch.optional<list<float>>) {
+        torch.prim.If.yield %arg2 : !torch.optional<list<float>>
+      } else {
+        torch.prim.RaiseException %str_1, %none : !torch.str, !torch.none
+        torch.prim.If.yield %0 : !torch.optional<list<float>>
+      }
+      %12 = torch.aten.len.t %9 : !torch.list<int> -> !torch.int
+      %13 = torch.aten.eq.int %12, %int2 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If %13 -> () {
+        torch.prim.If.yield
+      } else {
+        torch.prim.RaiseException %str_0, %none : !torch.str, !torch.none
+        torch.prim.If.yield
+      }
+      %14 = torch.aten.__getitem__.t %9, %int0 : !torch.list<int>, !torch.int -> !torch.int
+      %15 = torch.aten.append.t %1, %14 : !torch.list<int>, !torch.int -> !torch.list<int>
+      %16 = torch.aten.__getitem__.t %9, %int1 : !torch.list<int>, !torch.int -> !torch.int
+      %17 = torch.aten.append.t %1, %16 : !torch.list<int>, !torch.int -> !torch.list<int>
+      torch.prim.If.yield %11 : !torch.optional<list<float>>
+    } else {
+      torch.prim.If.yield %arg2 : !torch.optional<list<float>>
+    }
+    %8 = torch.aten.__isnot__ %7, %none : !torch.optional<list<float>>, !torch.none -> !torch.bool
+    torch.prim.If %8 -> () {
+      %9 = torch.prim.unchecked_cast %7 : !torch.optional<list<float>> -> !torch.list<float>
+      %10 = torch.aten.__is__ %arg1, %none : !torch.optional<list<int>>, !torch.none -> !torch.bool
+      torch.prim.If %10 -> () {
+        torch.prim.If.yield
+      } else {
+        torch.prim.RaiseException %str_1, %none : !torch.str, !torch.none
+        torch.prim.If.yield
+      }
+      %11 = torch.aten.len.t %9 : !torch.list<float> -> !torch.int
+      %12 = torch.aten.eq.int %11, %int2 : !torch.int, !torch.int -> !torch.bool
+      torch.prim.If %12 -> () {
+        torch.prim.If.yield
+      } else {
+        torch.prim.RaiseException %str_0, %none : !torch.str, !torch.none
+        torch.prim.If.yield
+      }
+      %13 = torch.aten.__getitem__.t %arg0, %int2 : !torch.list<int>, !torch.int -> !torch.int
+      %14 = torch.aten.__getitem__.t %9, %int0 : !torch.list<float>, !torch.int -> !torch.float
+      %15 = torch.operator "aten.mul.int_float"(%13, %14) : (!torch.int, !torch.float) -> !torch.float
+      %16 = torch.aten.Int.float %15 : !torch.float -> !torch.int
+      %17 = torch.aten.append.t %1, %16 : !torch.list<int>, !torch.int -> !torch.list<int>
+      %18 = torch.aten.__getitem__.t %arg0, %int3 : !torch.list<int>, !torch.int -> !torch.int
+      %19 = torch.aten.__getitem__.t %9, %int1 : !torch.list<float>, !torch.int -> !torch.float
+      %20 = torch.operator "aten.mul.int_float"(%18, %19) : (!torch.int, !torch.float) -> !torch.float
+      %21 = torch.aten.Int.float %20 : !torch.float -> !torch.int
+      %22 = torch.aten.append.t %1, %21 : !torch.list<int>, !torch.int -> !torch.list<int>
+      torch.prim.If.yield
+    } else {
+      torch.prim.If.yield
+    }
+    torch.prim.RaiseException %str, %none : !torch.str, !torch.none
+    return %1 : !torch.list<int>
   }
   func.func @"__torch_mlir_shape_fn.aten.bincount"(%arg0: !torch.list<int>, %arg1: !torch.optional<list<int>>, %arg2: !torch.int) -> !torch.list<int> {
     %0 = call @__torch__.hacky_get_unknown_dimension_size() : () -> !torch.int

@@ -1082,6 +1082,7 @@ def aten〇pad(self: List[int], pad: List[int], mode: str = "constant", value: O
     Invocation(TensorOfShape(2, 3), [LongTensorOfShape(4)]), # Fewer index tensors than dimensions.
     ErrorInvocation(TensorOfShape(2, 3), [LongTensorOfShape(4), LongTensorOfShape(4), LongTensorOfShape(4)]), # More index tensors than dimensions.
 ])
+
 def aten〇index〇Tensor(self: List[int], indices: List[Optional[List[int]]]) -> List[int]:
     assert len(indices) <= len(self), "More indices than dimensions to index"
     broadcasted_shape: List[int] = []
@@ -1124,6 +1125,29 @@ def aten〇index〇Tensor(self: List[int], indices: List[Optional[List[int]]]) -
 
 def aten〇cat(tensors: List[List[int]], dim: int = 0) -> List[int]:
     return upstream_shape_functions.cat(tensors, dim)
+
+def aten〇upsample_nearest2d〇vec(input: List[int], output_size: Optional[List[int]], scale_factors: Optional[List[float]]) -> List[int]:
+    out: List[int] = []
+    out.append(input[0])
+    out.append(input[1])
+    if output_size is not None:
+        assert (
+            scale_factors is None
+        ), "Must specify exactly one of output_size and scale_factors"
+        assert len(output_size) == 2
+        out.append(output_size[0])
+        out.append(output_size[1])
+
+    if scale_factors is not None:
+        assert (
+            output_size is None
+        ), "Must specify exactly one of output_size and scale_factors"
+        assert len(scale_factors) == 2
+        out.append(int(input[2] * scale_factors[0]))
+        out.append(int(input[3] * scale_factors[1]))
+  
+    assert 0, "Either output_size or scale_factors must be presented"
+    return out
 
 class DummyClassType:
     def __init__(self):
