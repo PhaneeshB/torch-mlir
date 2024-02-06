@@ -2831,6 +2831,25 @@ OpFoldResult AtenItemOp::fold(FoldAdaptor adaptor) {
     }
     return nullptr;
   }
+  // // if the input is from index_select which is from a splat vtensor.literal
+  // if (auto atenIndexSelectOp = getOperand().getDefiningOp<AtenIndexSelectOp>()) {
+  //   if (auto valueTensorLiteralOp = atenIndexSelectOp.getOperand(0).getDefiningOp<ValueTensorLiteralOp>()) {
+  //     auto value = valueTensorLiteralOp.getValue();
+  //     // auto numEle = value.getNumElements();
+  //     // llvm::outs() << "numEle : " << numEle << "\n";
+  //     if (!value.isSplat()) {
+  //       return nullptr;
+  //     }
+  //     auto splat = value.dyn_cast_or_null<DenseElementsAttr>().getSplatValue<Attribute>();
+  //     if (auto intAttr = dyn_cast<IntegerAttr>(splat)) {
+  //       return getI64IntegerAttr(getContext(), intAttr.getSInt());
+  //     }
+  //     if (auto floatAttr = dyn_cast<FloatAttr>(splat)) {
+  //       return getF64FloatAttr(getContext(), floatAttr.getValueAsDouble());
+  //     }
+  //     return nullptr;
+  //   }
+  // }
 
   return nullptr;
 }
@@ -3029,6 +3048,41 @@ OpFoldResult PrimMinIntOp::fold(FoldAdaptor adaptor) {
   return IntegerAttr::get(
       lhs.getType(),
       std::min(lhs.getValue().getSExtValue(), rhs.getValue().getSExtValue()));
+}
+
+//===----------------------------------------------------------------------===//
+// AtenIndexSelectOp
+//===----------------------------------------------------------------------===//
+
+OpFoldResult AtenIndexSelectOp::fold(FoldAdaptor adaptor) {
+
+  auto inputOperand = getOperand(0);
+  DenseElementsAttr inputAttr;
+  // Check for specific case where the input is a single valued vtensor literal
+  if (auto vTensorOp = inputOperand.getDefiningOp<ValueTensorLiteralOp>()) {
+    auto value = vTensorOp.getValue();
+    // auto vtr = vTensorOp.getResult().dyn_cast_or_null<ValueTensorType>();
+    int64_t numEle = value.getNumElements();
+    llvm::outs() << "Num ELE : " << numEle << "\n";
+    if (numEle > 1){
+      return nullptr;
+    }
+    auto splat = value.getSplatValue<Attribute>();
+    // can add more failure conditions here to make it generic
+    auto vTensorOpResultTy = vTensorOp.getResult().getType().dyn_cast<BaseTensorType>().getDtype();
+    SmallVector<int64_t> sizes;
+    sizes.push_back(1);
+    vTensorOpResultTy.dump();
+    ShapedType resTy = RankedTensorType::get(sizes, vTensorOpResultTy);
+    if (auto intAttr = dyn_cast<IntegerAttr>(splat)) {
+      return DenseElementsAttr::get(resTy, intAttr);
+    }
+    if (auto floatAttr = dyn_cast<FloatAttr>(splat)) {
+      return DenseElementsAttr::get(resTy, floatAttr);
+    }
+    return nullptr;
+  }
+  return nullptr;
 }
 
 //===----------------------------------------------------------------------===//
