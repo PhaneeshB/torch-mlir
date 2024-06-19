@@ -4977,6 +4977,7 @@ def aten〇_make_per_tensor_quantized_tensor〡dtype(self_rank_dtype: Tuple[int,
 
 def _maybe_import_op_extensions(args: argparse.Namespace):
     extension_string = str.strip(args.pytorch_op_extensions)
+    import importlib
     if len(extension_string) > 0:
         extension_names = extension_string.split(",")
         for name in extension_names:
@@ -4986,6 +4987,9 @@ def _maybe_import_op_extensions(args: argparse.Namespace):
 
 def main(args):
     _maybe_import_op_extensions(args)
+    import torchaudio
+    import torchaudio.functional
+
     asm = generate_library(globals())
     # We're about to put quotes around the string, so escape the `"` characters.
     asm = asm.replace("\"", "\\\"")

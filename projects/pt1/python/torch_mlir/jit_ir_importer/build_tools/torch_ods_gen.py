@@ -1143,6 +1143,13 @@ def emit_ops(emitter_td: TextEmitter, registry: Registry):
         traits=["HasValueSemantics"],
     )
 
+    # ==========================================================================
+    # `torchaudio::` namespace.
+    # ==========================================================================
+
+    emit(
+        "torchaudio::functional::melscale_fbanks : (int, float, float, int, int, Optional[str], str) -> (Tensor)"
+    )
 
 def dump_registered_ops(outfile: TextIO, registry: Registry):
     for _, v in sorted(registry.by_unique_key.items()):
@@ -1161,6 +1168,8 @@ def _maybe_import_op_extensions(args: argparse.Namespace):
 
 def main(args: argparse.Namespace):
     _maybe_import_op_extensions(args)
+    import torchaudio
+    import torchaudio.functional
     registry = Registry.load()
     if args.debug_registry_dump:
         with open(args.debug_registry_dump, "w") as debug_registry_dump:
